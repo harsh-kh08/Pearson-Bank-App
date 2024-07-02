@@ -10,7 +10,7 @@ const ibmPlexSerif = IBM_Plex_Serif({subsets:['latin'],weight:['400','700'],
 })
 export const metadata: Metadata = {
   title: "Pearson Bank",
-  description: "Pearson is a modern banking platform",
+  description: "Pearson is a revolutionary modern banking platform",
   icons:{
     icon:'/icons/logo.svg'
   }

@@ -95,7 +95,6 @@
   .text-26 {
     @apply text-[26px] leading-[32px];
   }
-
   .text-30 {
     @apply text-[30px] leading-[38px];
   }
