@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   title: "Pearson Bank",
   description: "Pearson is a revolutionary modern banking platform",
   icons:{
-    icon:'/icons/logo.svg'
+    icon:'/icons/pearson.svg'
   }
 };
 // Adding classname like ${inter.variable} and ${ibmPlexSerif.variable} will allow us to use these fonts types across application
