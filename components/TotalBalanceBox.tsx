@@ -8,7 +8,7 @@ import DoughnutChart from './DoughnutChart'
 // Total
 export const TotalBalanceBox = ({accounts=[],totalBanks,totalCurrentBalance}:TotalBalanceBoxProps) => {
   return (
-<section className='total-balance'>
+<section className='total-balance gradient-background'>
 <div className='total-balance-chart'>
   {/* Donut Chart */}
 <DoughnutChart accounts={accounts}   />

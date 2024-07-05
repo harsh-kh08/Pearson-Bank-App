@@ -43,6 +43,15 @@
   background: #7878a3;
 }
 
+.gradient-background {
+
+  /* background: linear-gradient(300deg, rgb(30, 48, 80), rgb(69, 120, 207), rgb(30, 48, 80)); */
+  background: linear-gradient(300deg, rgb(30, 48, 80), rgb(66, 130, 239), rgb(30, 48, 80));
+  background-size: 180% 180%;
+  animation: gradient-animation 5s ease infinite;
+
+}
+
 @layer utilities {
   .input-class {
     @apply text-16 placeholder:text-16 rounded-lg border border-gray-300 text-gray-900 placeholder:text-gray-500;
@@ -61,7 +70,7 @@
   }
 
   .header-2 {
-    @apply text-18 font-semibold text-gray-900;
+    @apply text-18 font-semibold text-white;
   }
 
   .text-10 {
@@ -125,11 +134,11 @@
   }
 
   .total-balance-label {
-    @apply text-14 font-medium text-gray-600;
+    @apply text-14 font-medium text-gray-300;
   }
 
   .total-balance-amount {
-    @apply text-24 lg:text-30 flex-1 font-semibold text-gray-900;
+    @apply text-24 lg:text-30 flex-1 font-semibold text-white;
   }
 
   .recent-transactions {
@@ -377,5 +386,19 @@
 
   .sidebar-label {
     @apply text-16 font-semibold text-[#c1555f] max-xl:hidden;
+  }
+}
+
+
+
+@keyframes gradient-animation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
   }
 }
