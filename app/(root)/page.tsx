@@ -14,8 +14,9 @@ const Home = ()=>
 <HeaderBox 
 type="greeting" title="Welcome" user={loggedIn?.name||"guest"}
 subtext="Access your account an manage transactions efficiently." />
-                </header>
+             
 <TotalBalanceBox accounts={[]} totalBanks = {1} totalCurrentBalance={1234.8} />
+</header>
             </div>
 
         </section>

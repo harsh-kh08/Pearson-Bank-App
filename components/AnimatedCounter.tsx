@@ -11,7 +11,7 @@ const AnimatedCounter = ({amount}:{amount:number}) => {
   return (
     <div className='w-full'>
       <p className='total-balance-amount flex-center gap-2'>
-<CountUp decimal='.' prefix='$'end={amount} decimals={2} />
+<CountUp duration={1.00} decimal='.' prefix='$'end={amount} decimals={2} />
 </p>
 
     </div>
