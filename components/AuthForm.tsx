@@ -23,13 +23,17 @@ import {
 import { Input } from "@/components/ui/input"
 import CustomInput from './CustomInput'
 import { Loader2 } from 'lucide-react'
+import { useRouter } from 'next/navigation'
+import { signIn, signUp } from '@/lib/actions/user.actions'
 
 
 
 const AuthForm = ({ type }: { type: string }) => {
+    const router = useRouter();
     const formSchema = authFormSchema(type);
     const [user, setUser] = useState(null)
     const [isLoading, setIsLoading] = useState(false);
+
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -47,11 +51,53 @@ resolver: zodResolver(formSchema): This uses zodResolver from @hookform/resolver
 
     */
 
-    function onSubmit(values: z.infer<typeof formSchema>) {
-        // Do something with the form values.
-        // ✅ This will be type-safe and validated.
+    const onSubmit = async (data: z.infer<typeof formSchema>) => {
         setIsLoading(true);
-        console.log(values)
+        try {
+
+
+            // Sign Up with App write & crate Plaid Token
+            // We can create new account with App write
+            // And we can crate Plaid token so we can start linking our bank account
+
+            if (type === 'sign-up') {
+
+                // We don't need these objects as we already have data objects
+                // const userData = {
+                //     firstName: data.firstName
+
+                // }
+
+
+                const newUser = await signUp(data); /* We will use form data object and will signup using signUp function which will
+                helps us sign up through Appwrite */
+
+                setUser(newUser); // This will redirect or load this component again as this setState function
+                // gets executed as it is a hook and use re-render lifecycles.
+
+            }
+
+            if (type == 'sign-in') {
+
+                const response = await signIn({
+                    email: data.email,
+                    password: data.password
+                }); /* For SignIn, we only need two fields email and password so we will extract from the form data object */
+
+                if (response) router.push('/')  /* If we got response back, we will route over to home page */
+
+
+
+            }
+
+        } catch (error) {
+            console.log(error);
+        }
+
+        finally {
+            setIsLoading(false);
+        }
+
         setIsLoading(false);
     }
 
@@ -77,7 +123,7 @@ resolver: zodResolver(formSchema): This uses zodResolver from @hookform/resolver
             {user ? (
                 <div className='flex flex-col gap-4'>
                     {/*Plaid Account */}
-                </div>
+                </div >
             ) : <>
 
                 <Form {...form}>
@@ -147,9 +193,9 @@ resolver: zodResolver(formSchema): This uses zodResolver from @hookform/resolver
 
             </>}
 
-            <footer className='flex justify-center gap-1'>
-                <p className='text-14 font-normal text-gray-600'>{type === 'sign-in' ? "Don't have an account" : "Already have an account?"}</p>
-                <Link className='form-link' href={type === 'sign-in' ? '/sign-up' : '/sign-in'}>{type === 'sign-in' ? "Sign Up" : "Sign In"}</Link>
+            <footer className='flex justify-center gap-1 font-medium'>
+                <p className='text-14 font-medium text-gray-600'>{type === 'sign-in' ? "Don't have an account" : "Already have an account?"}</p>
+                <Link className='form-link font-medium' href={type === 'sign-in' ? '/sign-up' : '/sign-in'}>{type === 'sign-in' ? "Sign Up" : "Sign In"}</Link>
             </footer>
 
 
