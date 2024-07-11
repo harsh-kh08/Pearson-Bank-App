@@ -194,7 +194,7 @@ resolver: zodResolver(formSchema): This uses zodResolver from @hookform/resolver
             </>}
 
             <footer className='flex justify-center gap-1 font-medium'>
-                <p className='text-14 font-medium text-gray-600'>{type === 'sign-in' ? "Don't have an account" : "Already have an account?"}</p>
+                <p className='text-14 font-medium text-gray-600'>{type === 'sign-in' ? "Don't have an account?" : "Already have an account?"}</p>
                 <Link className='form-link font-medium' href={type === 'sign-in' ? '/sign-up' : '/sign-in'}>{type === 'sign-in' ? "Sign Up" : "Sign In"}</Link>
             </footer>
 
