@@ -25,6 +25,7 @@ import CustomInput from './CustomInput'
 import { Loader2 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { signIn, signUp } from '@/lib/actions/user.actions'
+import PlaidLink from './PlaidLink'
 
 
 
@@ -62,14 +63,23 @@ resolver: zodResolver(formSchema): This uses zodResolver from @hookform/resolver
 
             if (type === 'sign-up') {
 
-                // We don't need these objects as we already have data objects
-                // const userData = {
-                //     firstName: data.firstName
 
-                // }
+                const userData = {
+                    email: data.email,
+                    password: data.password,
+                    firstName: data.firstName!,
+                    lastName: data.lastName!,
+                    address1: data.address1!,
+                    state: data.state!,
+                    postalCode: data.postalCode!,
+                    dateOfBirth: data.dateOfBirth!,
+                    ssn: data.ssn!,
+                    city: data.city!
+
+                }
 
 
-                const newUser = await signUp(data); /* We will use form data object and will signup using signUp function which will
+                const newUser = await signUp(userData); /* We will use form data object and will signup using signUp function which will
                 helps us sign up through Appwrite */
 
                 setUser(newUser); // This will redirect or load this component again as this setState function
@@ -122,7 +132,7 @@ resolver: zodResolver(formSchema): This uses zodResolver from @hookform/resolver
             </header>
             {user ? (
                 <div className='flex flex-col gap-4'>
-                    {/*Plaid Account */}
+                    <PlaidLink user={user} variant='primary' />
                 </div >
             ) : <>
 
