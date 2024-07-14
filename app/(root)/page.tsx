@@ -2,13 +2,25 @@
 import HeaderBox from "@/components/HeaderBox";
 import RightSidebar from "@/components/RightSidebar";
 import { TotalBalanceBox } from "@/components/TotalBalanceBox";
+import { getAccount, getAccounts } from "@/lib/actions/bank.actions";
 import { getLoggedInUser } from "@/lib/appwrite";
 import React from "react";
 
-const Home = async () => {
+const Home = async ({ searchParams: { id, page } }: SearchParamProps) => {
     const loggedIn = await getLoggedInUser();
     // console.log(loggedInUser)
 
+    // Here accounts array consist of account oject which contains actual bank account, information of loggedin user through pliad using access toekn
+    const accounts = await getAccounts({ userId: loggedIn.$id }); // this loggedIn.$id is database user table id
+
+    if (!accounts) return;
+
+
+    // Appwrite id is here itemId  which was generated along access token during exchnage of public token with Pliad
+    const accountsData = accounts?.data;
+    const appwriteItemId = (id as string) || accountsData[0]?.appwriteItemId;
+
+    const account = await getAccount({ appwriteItemId });
 
     return (
         <section className="home" >
@@ -17,15 +29,15 @@ const Home = async () => {
                     <HeaderBox
                         type="greeting"
                         title="Welcome"
-                        user={loggedIn?.name || "guest"
+                        user={loggedIn?.firstName || "guest"
                         }
                         subtext="Access your account an manage transactions efficiently."
                     />
 
                     <TotalBalanceBox
-                        accounts={[]}
-                        totalBanks={1}
-                        totalCurrentBalance={1234.8}
+                        accounts={accountsData}
+                        totalBanks={accounts?.totalBanks}
+                        totalCurrentBalance={accounts?.totalCurrentBalance}
                     />
                 </header>
                 TRANSACTION
@@ -35,9 +47,9 @@ const Home = async () => {
 
             < RightSidebar
                 user={loggedIn}
-                transactions={[]}
-                banks={[{ currentBalance: 123.50 }, {}]}
-            > </RightSidebar>
+                transactions={accounts?.transactions}
+                banks={accountsData?.slice(0, 2)}
+            />
         </section>
     );
 };

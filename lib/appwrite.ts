@@ -5,6 +5,7 @@ import { cookies } from "next/headers";
 import { Databases } from "node-appwrite";
 import { parseStringify } from "./utils";
 import { redirect } from "next/dist/server/api-utils";
+import { getUserInfo } from "./actions/user.actions";
 
 // This will return the the instance of Appwrite cliet and return a object of Account classwhich provides certain methods.
 export async function createSessionClient() {
@@ -59,7 +60,10 @@ export async function createAdminClient() {
 export async function getLoggedInUser() {
   try {
     const { account } = await createSessionClient();
-    const user = await account.get();
+    const result = await account.get();
+
+    const user = await getUserInfo({ userId: result.$id });
+
     return parseStringify(user);
   } catch (error) {
     return null;

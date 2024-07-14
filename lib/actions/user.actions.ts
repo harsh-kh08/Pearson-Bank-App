@@ -2,7 +2,7 @@
 
 "use server";
 
-import { ID } from "node-appwrite";
+import { ID, Query } from "node-appwrite";
 import { createAdminClient, getLoggedInUser } from "../appwrite";
 import { cookies } from "next/headers";
 import { encryptId, extractCustomerIdFromUrl, parseStringify } from "../utils";
@@ -18,11 +18,28 @@ import BankCard from "@/components/BankCard";
 import { revalidatePath } from "next/cache";
 import { parse } from "path";
 import { addFundingSource, createDwollaCustomer } from "./dwolla.actions";
+import { stringify } from "querystring";
 const {
   APPWRITE_DATABASE_ID: DATABASE_ID,
   APPWRITE_USER_COLLECTION_ID: USER_COLLECTION_ID,
   APPWRITE_BANK_COLLECTION_ID: BANK_COLLECTION_ID,
 } = process.env;
+
+export const getUserInfo = async ({ userId }: getUserInfoProps) => {
+  try {
+    const { database } = await createAdminClient();
+    const user = await database.listDocuments(
+      DATABASE_ID!,
+      USER_COLLECTION_ID!,
+      [Query.equal("userId", [userId])]
+    );
+
+    return parseStringify(user.documents[0]);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const signIn = async (userData: signInProps) => {
   try {
     // Mutation / Database / Fetch
@@ -37,7 +54,12 @@ export const signIn = async (userData: signInProps) => {
       secure: true,
     });
 
-    return parseStringify(session);
+    // Session created during login time contains userId of 'Apprite Users registered Account' not the 'users' collection of appwrite database
+
+    const user = await getUserInfo({ userId: session.userId }); // This 'getUserInfo' will fetches real user
+    // data from database using userId of registred account(Account.get()) in appwrite.
+
+    return parseStringify(user);
   } catch (error) {
     console.error("Error", error);
   }
@@ -46,6 +68,7 @@ export const signIn = async (userData: signInProps) => {
 /* The signUpWithEmail function is an async function that takes the form data as an argument. It uses the createAdminClient function to create an admin Appwrite client and then calls the createEmailPasswordSession method on the account object. 
 This method takes the email and password as arguments and returns a session object. 
 We then set the session secret in a cookie and redirect the user to the account page. */
+
 export const signUp = async ({ password, ...userData }: SignUpParams) => {
   const { email, firstName, lastName } = userData;
   let newUserAccount;
@@ -53,7 +76,7 @@ export const signUp = async ({ password, ...userData }: SignUpParams) => {
     // Here. we will choose open source backend tool Appwrite to create a user account
 
     const { account, database } = await createAdminClient(); //returns object for Account Class and Database Class
-    //This will create a new user in appWrite during SignUp using Account Class
+    //This will create a new  appWrite login user in during SignUp using Account Class
     newUserAccount = await account.create(
       ID.unique(),
       email,
@@ -73,7 +96,7 @@ export const signUp = async ({ password, ...userData }: SignUpParams) => {
 
     // Fetch dwollaCustomerId from dwollaCustomerUrl
     const dwollaCustomerId = extractCustomerIdFromUrl(dwollaCustomerUrl);
-
+    // Add this new user in databse user table
     const newUser = await database.createDocument(
       DATABASE_ID!,
       USER_COLLECTION_ID!,
@@ -166,11 +189,12 @@ export const exchangePublicToken = async ({
     const accessToken = response.data.access_token;
     const itemId = response.data.item_id;
 
-    // Get account information from Plaid using the access token
+    // Get registered bank account information from Plaid using the access token
     const accountResponse = await pliadClient.accountsGet({
       access_token: accessToken,
     });
 
+    // It is used to fetch data for the bank account connected to Plaid
     const accountData = accountResponse.data.accounts[0];
 
     /* 
@@ -248,6 +272,38 @@ ACH transfers (Automated Clearing House Transactions) using the linked bank acco
     return parseStringify({
       publicTokenExchange: "complete",
     });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// Databse query to get banks account with help of userId of registered SignUp User
+export const getBanks = async ({ userId }: getBanksProps) => {
+  try {
+    const { database } = await createAdminClient();
+    const banks = await database.listDocuments(
+      DATABASE_ID!,
+      BANK_COLLECTION_ID!,
+      [Query.equal("userId", [userId])]
+    );
+
+    return parseStringify(banks.documents);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// Databse query to get a bank account with help of documentId of of the bank account document
+export const getBank = async ({ documentId }: getBankProps) => {
+  try {
+    const { database } = await createAdminClient();
+    const banks = await database.listDocuments(
+      DATABASE_ID!,
+      BANK_COLLECTION_ID!,
+      [Query.equal("$id", [documentId])]
+    );
+
+    return parseStringify(banks.documents[0]);
   } catch (error) {
     console.log(error);
   }

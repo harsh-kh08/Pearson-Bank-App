@@ -61,7 +61,7 @@ const PlaidLink = ({ user, variant }: PlaidLinkProps) => {
             await exchangePublicToken(
                 {
                     publicToken: public_token,
-                    user
+                    user // contains user id of user tanle database
                 }
             )
 
