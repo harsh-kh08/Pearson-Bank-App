@@ -86,21 +86,21 @@ export const getAccount = async ({ appwriteItemId }: getAccountProps) => {
     const accountData = accountsResponse.data.accounts[0];
 
     // get transfer transactions from appwrite
-    const transferTransactionsData = await getTransactionsByBankId({
-      bankId: bank.$id,
-    });
+    // const transferTransactionsData = await getTransactionsByBankId({
+    //   bankId: bank.$id,
+    // });
 
-    const transferTransactions = transferTransactionsData.documents.map(
-      (transferData: Transaction) => ({
-        id: transferData.$id,
-        name: transferData.name!,
-        amount: transferData.amount!,
-        date: transferData.$createdAt,
-        paymentChannel: transferData.channel,
-        category: transferData.category,
-        type: transferData.senderBankId === bank.$id ? "debit" : "credit",
-      })
-    );
+    // const transferTransactions = transferTransactionsData.documents.map(
+    //   (transferData: Transaction) => ({
+    //     id: transferData.$id,
+    //     name: transferData.name!,
+    //     amount: transferData.amount!,
+    //     date: transferData.$createdAt,
+    //     paymentChannel: transferData.channel,
+    //     category: transferData.category,
+    //     type: transferData.senderBankId === bank.$id ? "debit" : "credit",
+    //   })
+    // );
 
     // get institution info from plaid
     const institution = await getInstitution({
@@ -125,10 +125,13 @@ export const getAccount = async ({ appwriteItemId }: getAccountProps) => {
     };
 
     // sort transactions by date such that the most recent transaction is first
-    const allTransactions = [...transactions, ...transferTransactions].sort(
+    // const allTransactions = [...transactions, ...transferTransactions].sort(
+    //   (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+    // );
+
+    const allTransactions = [...transactions].sort(
       (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
     );
-
     return parseStringify({
       data: account,
       transactions: allTransactions,
