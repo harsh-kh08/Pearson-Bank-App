@@ -31,13 +31,13 @@ export const getAccounts = async ({ userId }: getAccountsProps) => {
       banks?.map(async (bank: Bank) => {
         // get each account info from plaid
         const accountsResponse = await pliadClient.accountsGet({
-          access_token: bank.accessToken,
+          access_token: bank?.accessToken,
         });
-        const accountData = accountsResponse.data.accounts[0];
+        const accountData = accountsResponse?.data.accounts[0];
 
         // get institution info from plaid
         const institution = await getInstitution({
-          institutionId: accountsResponse.data.item.institution_id!,
+          institutionId: accountsResponse?.data.item.institution_id!,
         });
 
         /* Now here, we will create a object 'account' which will only have information
@@ -81,9 +81,9 @@ export const getAccount = async ({ appwriteItemId }: getAccountProps) => {
 
     // get account info from plaid
     const accountsResponse = await pliadClient.accountsGet({
-      access_token: bank.accessToken,
+      access_token: bank?.accessToken,
     });
-    const accountData = accountsResponse.data.accounts[0];
+    const accountData = accountsResponse?.data.accounts[0];
 
     // get transfer transactions from appwrite
     // const transferTransactionsData = await getTransactionsByBankId({
@@ -173,9 +173,9 @@ export const getTransactions = async ({
         access_token: accessToken,
       });
 
-      const data = response.data;
+      const data = response?.data;
 
-      transactions = response.data.added.map((transaction) => ({
+      transactions = response?.data.added.map((transaction) => ({
         id: transaction.transaction_id,
         name: transaction.name,
         paymentChannel: transaction.payment_channel,

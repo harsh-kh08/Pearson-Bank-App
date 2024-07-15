@@ -28,7 +28,7 @@ const {
 export const getUserInfo = async ({ userId }: getUserInfoProps) => {
   try {
     const { database } = await createAdminClient();
-    const user = await database.listDocuments(
+    const user = await database?.listDocuments(
       DATABASE_ID!,
       USER_COLLECTION_ID!,
       [Query.equal("userId", [userId])]
@@ -186,8 +186,8 @@ export const exchangePublicToken = async ({
       public_token: publicToken,
     });
 
-    const accessToken = response.data.access_token;
-    const itemId = response.data.item_id;
+    const accessToken = response?.data.access_token;
+    const itemId = response?.data.item_id;
 
     // Get registered bank account information from Plaid using the access token
     const accountResponse = await pliadClient.accountsGet({
@@ -195,7 +195,7 @@ export const exchangePublicToken = async ({
     });
 
     // It is used to fetch data for the bank account connected to Plaid
-    const accountData = accountResponse.data.accounts[0];
+    const accountData = accountResponse?.data.accounts[0];
 
     /* 
     
@@ -238,9 +238,9 @@ ACH transfers (Automated Clearing House Transactions) using the linked bank acco
 
 */
     const fundingSourceUrl = await addFundingSource({
-      dwollaCustomerId: user.dwollaCustomerId,
+      dwollaCustomerId: user?.dwollaCustomerId,
       processorToken,
-      bankName: accountData.name,
+      bankName: accountData?.name,
     });
 
     // If the funding source url is not been created, throw an error
@@ -281,13 +281,13 @@ ACH transfers (Automated Clearing House Transactions) using the linked bank acco
 export const getBanks = async ({ userId }: getBanksProps) => {
   try {
     const { database } = await createAdminClient();
-    const banks = await database.listDocuments(
+    const banks = await database?.listDocuments(
       DATABASE_ID!,
       BANK_COLLECTION_ID!,
       [Query.equal("userId", [userId])]
     );
 
-    return parseStringify(banks.documents);
+    return parseStringify(banks?.documents);
   } catch (error) {
     console.log(error);
   }
@@ -297,13 +297,13 @@ export const getBanks = async ({ userId }: getBanksProps) => {
 export const getBank = async ({ documentId }: getBankProps) => {
   try {
     const { database } = await createAdminClient();
-    const banks = await database.listDocuments(
+    const banks = await database?.listDocuments(
       DATABASE_ID!,
       BANK_COLLECTION_ID!,
       [Query.equal("$id", [documentId])]
     );
 
-    return parseStringify(banks.documents[0]);
+    return parseStringify(banks?.documents[0]);
   } catch (error) {
     console.log(error);
   }

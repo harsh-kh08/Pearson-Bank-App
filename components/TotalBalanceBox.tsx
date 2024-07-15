@@ -5,6 +5,7 @@ import React from 'react'
 import AnimatedCounter from './AnimatedCounter'
 import { Doughnut } from 'react-chartjs-2'
 import DoughnutChart from './DoughnutChart'
+import OpenAIDrawer from './OpenAIDrawer'
 // Total
 export const TotalBalanceBox = ({ accounts = [], totalBanks, totalCurrentBalance }: TotalBalanceBoxProps) => {
   return (
@@ -48,6 +49,9 @@ Components in Next.js can be either server or client components:
 
         </div>
       </div>
+
+      <OpenAIDrawer amount={totalCurrentBalance} />
+
     </section>
   )
 }

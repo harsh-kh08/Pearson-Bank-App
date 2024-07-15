@@ -44,7 +44,7 @@ export const createOnDemandAuthorization = async () => {
     const onDemandAuthorization = await dwollaClient.post(
       "on-demand-authorizations"
     );
-    const authLink = onDemandAuthorization.body._links;
+    const authLink = onDemandAuthorization?.body._links;
     return authLink;
   } catch (err) {
     console.error("Creating an On Demand Authorization Failed: ", err);

@@ -4,6 +4,7 @@ import RecentTransactions from "@/components/RecentTransactions";
 import RightSidebar from "@/components/RightSidebar";
 import { TotalBalanceBox } from "@/components/TotalBalanceBox";
 import { getAccount, getAccounts } from "@/lib/actions/bank.actions";
+import { chatCompletion } from "@/lib/actions/openai.actions";
 import { getLoggedInUser } from "@/lib/appwrite";
 import React from "react";
 
@@ -13,9 +14,13 @@ const Home = async ({ searchParams: { id, page } }: SearchParamProps) => {
     // console.log(loggedInUser)
 
     // Here accounts array consist of account oject which contains actual bank account, information of loggedin user through pliad using access toekn
-    const accounts = await getAccounts({ userId: loggedIn.$id }); // this loggedIn.$id is database user table id
+    const accounts = await getAccounts({ userId: loggedIn?.$id }); // this loggedIn.$id is database user table id
 
     if (!accounts) return;
+
+
+
+
 
 
     // Appwrite id is here itemId  which was generated along access token during exchnage of public token with Pliad
@@ -46,6 +51,10 @@ const Home = async ({ searchParams: { id, page } }: SearchParamProps) => {
 
                 {/* Here, appwriteBankId is the id of the document in database collection */}
                 <RecentTransactions accounts={accountsData} transactions={account?.transactions} appwriteItemId={appwriteItemId} page={currentPage} />
+
+
+
+
 
 
             </div>
