@@ -5,16 +5,31 @@ import RightSidebar from "@/components/RightSidebar";
 import { TotalBalanceBox } from "@/components/TotalBalanceBox";
 import { getAccount, getAccounts } from "@/lib/actions/bank.actions";
 import { chatCompletion } from "@/lib/actions/openai.actions";
+import { getUserInfo } from "@/lib/actions/user.actions";
 import { getLoggedInUser } from "@/lib/appwrite";
 import React from "react";
 
 const Home = async ({ searchParams: { id, page } }: SearchParamProps) => {
     const currentPage = Number(page as string) || 1;
     const loggedIn = await getLoggedInUser();
-    // console.log(loggedInUser)
+    // console.log(loggedIn)
 
     // Here accounts array consist of account oject which contains actual bank account, information of loggedin user through pliad using access toekn
     const accounts = await getAccounts({ userId: loggedIn?.$id }); // this loggedIn.$id is database user table id
+
+
+
+
+    // New  Code
+    // const currentPage = Number(page as string) || 1;
+    // const usernew = await getLoggedInUser();
+    // console.log(usernew)
+    // const loggedIn = await getUserInfo({ userId: usernew.$id });
+    // console.log(loggedIn)
+    // // Here accounts array consist of account oject which contains actual bank account, information of loggedin user through pliad using access toekn
+    // const accounts = await getAccounts({ userId: loggedIn?.$id });
+
+
 
     if (!accounts) return;
 

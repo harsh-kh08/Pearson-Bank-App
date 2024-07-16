@@ -61,10 +61,16 @@ export async function getLoggedInUser() {
   try {
     const { account } = await createSessionClient();
     const result = await account.get();
-
+    // console.log("this is Appwrite User :", result);
     const user = await getUserInfo({ userId: result.$id });
-
     return parseStringify(user);
+
+    // // New Code
+    // const { account } = await createSessionClient();
+    // const result = await account.get();
+    // // console.log("this is Appwrite User :", result);
+
+    return parseStringify(result);
   } catch (error) {
     return null;
   }

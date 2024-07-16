@@ -21,10 +21,10 @@ const RecentTransactions = ({ accounts, transactions, appwriteItemId, page }: Re
 
             <Tabs defaultValue={appwriteItemId} className="w-full">
                 <TabsList className='recent-transactions-tablist'>
-                    {accounts.map((account: Account) => (<TabsTrigger key={account.id} value={account.appwriteItemId}><BankTabItem account={account} appwriteItemId={account.appwriteItemId} /></TabsTrigger>))}
+                    {accounts.map((account: Account) => (<TabsTrigger key={account.id} value={account.appwriteItemId}><BankTabItem account={account} appwriteItemId={appwriteItemId} /></TabsTrigger>))}
                 </TabsList>
                 {accounts.map((account) => <TabsContent key={account.id} value={account.appwriteItemId}>
-                    <BankInfo account={account} appwriteItemId={account.appwriteItemId} type="full" />
+                    <BankInfo account={account} appwriteItemId={appwriteItemId} type="full" />
                 </TabsContent>)}
 
                 <TransactionTable transactions={transactions} />

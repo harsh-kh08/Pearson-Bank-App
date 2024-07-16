@@ -8,7 +8,7 @@ import {
 } from 'react-plaid-link';
 import { useRouter } from 'next/navigation';
 import { createLinkToken, exchangePublicToken } from '@/lib/actions/user.actions';
-
+import Image from 'next/image';
 /* 
 
 - First we send the request to /link/token/create to create a link token
@@ -94,12 +94,14 @@ const PlaidLink = ({ user, variant }: PlaidLinkProps) => {
             {variant === 'primary' ? (<Button onClick={() => open()} disabled={!ready} className='plaidlink-primary gradient-background'>
                 Connect Bank
 
-            </Button>) : variant === 'ghost' ? (<Button>
-
-                Connect Bank
+            </Button>) : variant === 'ghost' ? (<Button onClick={() => open()} variant="ghost" className='plaidlink-ghost'>
+                <Image alt='connect bank' width={24} height={24} src="/icons/connect-bank.svg" />
+                <p className=' hidden text-[16px] font-semibold xl:block'>Connect Bank</p>
             </Button>) : (
-                <Button>
-                    Connect Bank
+                <Button onClick={() => open()} className='plaidlink-default'>
+                    <Image alt='connect bank' width={24} height={24} src="/icons/connect-bank.svg" />
+                    <p className='text-[16px] font-semibold text-gray-600'>Connect Bank</p>
+
                 </Button>
             )}
 

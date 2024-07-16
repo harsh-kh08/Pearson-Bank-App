@@ -6,6 +6,7 @@ import { cn } from '@/lib/utils'
 import { sidebarLinks } from '@/constants'
 import { usePathname } from 'next/navigation'
 import Footer from './Footer'
+import PlaidLink from './PlaidLink'
 function Sidebar({ user }: SiderbarProps) {
 
     const pathName = usePathname();
@@ -21,7 +22,7 @@ function Sidebar({ user }: SiderbarProps) {
 
                     (link) => {
 
-                        const isActive = pathName === link.route || pathName.startsWith(link.route)
+                        const isActive = pathName === link.route || pathName.startsWith(`${link.route}/`)
 
                         return (
 
@@ -39,7 +40,7 @@ function Sidebar({ user }: SiderbarProps) {
 
 
                 )}
-
+                <PlaidLink user={user} />
             </nav>
 
 
