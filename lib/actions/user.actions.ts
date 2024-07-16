@@ -197,6 +197,9 @@ export const exchangePublicToken = async ({
     // It is used to fetch data for the bank account connected to Plaid
     const accountData = accountResponse?.data.accounts[0];
 
+    // When we get the account information using Plaid.accountsGet , the account data also contains shareable id or acount is in encrypted form
+    // which is shareable to others and to which we can send our money.
+
     /* 
     
     Now using access token and account data , we can create a processor token for dwolla
@@ -304,6 +307,26 @@ export const getBank = async ({ documentId }: getBankProps) => {
     );
 
     return parseStringify(banks?.documents[0]);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getBankByAccountId = async ({
+  accountId,
+}: getBankByAccountIdProps) => {
+  try {
+    const { database } = await createAdminClient();
+    const bank = await database.listDocuments(
+      DATABASE_ID!,
+      BANK_COLLECTION_ID!,
+      [Query.equal("accountId", [accountId])]
+    );
+
+    if (bank.total != 1) {
+      return null;
+    }
+    return parseStringify(bank.documents[0]);
   } catch (error) {
     console.log(error);
   }

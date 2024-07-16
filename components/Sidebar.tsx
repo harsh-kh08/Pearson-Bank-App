@@ -14,7 +14,7 @@ function Sidebar({ user }: SiderbarProps) {
         <section className='sidebar'>
             <nav className='flex flex-col gap-4'>
                 <Link href="/" className='mb-12 items-center cursor-pointer gap-2 flex'>
-                    <Image className='size-[45px] max-xl:size-14' alt='Pearson Logo' src='/icons/pearson.svg' width={34} height={34} />
+                    <Image className='size-[24px] max-xl:size-14' alt='Pearson Logo' src='/icons/vault.svg' width={34} height={34} />
                     <h1 className='sidebar-logo'>Pearson</h1>
                 </Link>
 
@@ -26,7 +26,7 @@ function Sidebar({ user }: SiderbarProps) {
 
                         return (
 
-                            <Link key={link.label} href={link.route} className={cn('sidebar-link', { 'bg-[#c1555f]': isActive })}>
+                            <Link key={link.label} href={link.route} className={cn('sidebar-link', { 'gradient-background': isActive })}>
                                 {/* <Image src={link.imgURL} width={34} height={34} alt={link.label} /> */}
                                 <div className='relative size-6'>
                                     <Image src={link.imgURL} alt={link.label} fill className={cn({ 'brightness-[3] invert-0': isActive })}>
