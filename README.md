@@ -1,36 +1,33 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# AI POWERED BANKING APPLICATION WITH INTELLIGENT INVESTMENT RECOMMENDATIONS
 
-## Getting Started
+## FEATURES
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+>### FINANCEWISE - Your AI Portfolio manager
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+![FINANCEWISE - YOUR AI PORTFOLIO MANAGER](https://github.com/user-attachments/assets/c77914e5-3310-4dbd-bbb7-dba86316088e)
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+---
 
-## Learn More
+>### Realtime Dashboard - With Account Info, Balances , Transactions and much more
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+![Realtime Dasboard](https://github.com/user-attachments/assets/2007c449-4b74-44d4-b241-99255681572d)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+>### Connect Banks - Connect Banking with Multiple accounts across different platforms using Plaid
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+![Plaid](https://github.com/user-attachments/assets/220f6bb3-4a72-4c31-aa49-c163d6591f76)
+
+
+>### Transfer Money - Transfer Money across different accounts using Dwolla 
+
+![Transfer Money](https://github.com/user-attachments/assets/61d0db24-21dd-4dd5-a4b5-3d1df060957b)
+
