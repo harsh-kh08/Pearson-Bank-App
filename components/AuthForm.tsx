@@ -78,6 +78,7 @@ resolver: zodResolver(formSchema): This uses zodResolver from @hookform/resolver
 
                 }
 
+                console.log("Form data : ", userData);
 
                 const newUser = await signUp(userData); /* We will use form data object and will signup using signUp function which will
                 helps us sign up through Appwrite */

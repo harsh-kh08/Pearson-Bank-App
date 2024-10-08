@@ -49,7 +49,7 @@ const TransactionHistory = async ({ searchParams: { id, page } }: SearchParamPro
     const indexOfLastTransaction = currentPage * rowsPerPage;
     const indexOfFirstTransaction = indexOfLastTransaction - rowsPerPage;
 
-    const currentTransactions = account?.transactions.slice(indexOfFirstTransaction, indexOfLastTransaction);
+    const currentTransactions = account?.transactions?.slice(indexOfFirstTransaction, indexOfLastTransaction);
 
 
 

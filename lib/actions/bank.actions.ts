@@ -102,6 +102,8 @@ export const getAccount = async ({ appwriteItemId }: getAccountProps) => {
       })
     );
 
+    console.log(transferTransactions);
+
     // get institution info from plaid
     const institution = await getInstitution({
       institutionId: accountsResponse.data.item.institution_id!,
@@ -125,13 +127,13 @@ export const getAccount = async ({ appwriteItemId }: getAccountProps) => {
     };
 
     // sort transactions by date such that the most recent transaction is first
-    const allTransactions = [...transactions, ...transferTransactions].sort(
-      (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-    );
-
-    // const allTransactions = [...transactions].sort(
+    // const allTransactions = [...transactions, ...transferTransactions].sort(
     //   (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
     // );
+
+    const allTransactions = [...transferTransactions].sort(
+      (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+    );
     return parseStringify({
       data: account,
       transactions: allTransactions,
@@ -174,7 +176,7 @@ export const getTransactions = async ({
       });
 
       const data = response?.data;
-
+      console.log(data);
       transactions = response?.data.added.map((transaction) => ({
         id: transaction.transaction_id,
         name: transaction.name,
@@ -191,6 +193,7 @@ export const getTransactions = async ({
       hasMore = data.has_more;
     }
 
+    console.log(parseStringify(transactions));
     return parseStringify(transactions);
   } catch (error) {
     console.error("An error occurred while getting the accounts:", error);
