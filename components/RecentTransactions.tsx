@@ -19,7 +19,6 @@ const RecentTransactions = ({ accounts, transactions, appwriteItemId, page }: Re
     const currentTransactions = transactions?.slice(indexOfFirstTransaction, indexOfLastTransaction);
 
 
-
     return (
         <section className='recent-transactions'>
             <header className='flex items-center justify-between'>
